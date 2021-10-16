@@ -1,0 +1,64 @@
+
+ext.deps = [:]
+
+//-----------------环境设置---------------------
+deps.isRelease = false
+//-----------------环境设置END--------------------
+
+//----------------android构建版本------------------
+def androidID =[:]
+androidID.compileSdk = 31
+androidID.minSdk = 21
+androidID.targetSdk = 31
+androidID.versionCode = 1
+androidID.versionName = "1.0"
+deps.androidID = androidID
+//----------------android构建版本END------------------
+
+//----------------服务器地址渠道-------------------
+def serverUrl =[:]
+serverUrl.debug = "123"
+serverUrl.release = "456"
+deps.serverUrl = serverUrl
+//----------------服务器地址渠道END-------------------
+
+
+//-----------------所有依赖版本-------------------
+def versions = [:]
+//创建工程自带的依赖版本
+versions.ktx = "1.3.2"
+versions.appcompat= '1.2.0'
+versions.material= '1.3.0'
+versions.constraintlayout= '2.0.4'
+versions.junit= '4.+'
+versions.junittest= '1.1.2'
+versions.core= '3.3.0'
+
+
+//alibaba ARouter
+versions.arouter_api = "1.5.2"
+versions.arouter_register = "1.0.2"
+versions.arouter_compiler = "1.5.2"
+
+deps.versions = versions
+//-----------------所有依赖版本END-------------------
+
+//-----------------第三方依赖------------------------
+//路由框架
+def dependencies = [
+
+        //自带
+        ktx: "androidx.core:core-ktx:$versions.ktx",
+        appcompat: "androidx.appcompat:appcompat:$versions.appcompat",
+        material: "com.google.android.material:material:$versions.material",
+        constraintlayout: "androidx.constraintlayout:constraintlayout:$versions.constraintlayout",
+
+//        //路由
+        //arouter_register : "com.alibaba:arouter-register:$versions.arouter_register",
+        arouter_api : "com.alibaba:arouter-api:$versions.arouter_api",
+        //arouter_compiler:"com.alibaba:arouter-compiler:$versions.arouter_compiler"
+
+]
+deps.dependencies = dependencies
+
+//-----------------第三方依赖END------------------------

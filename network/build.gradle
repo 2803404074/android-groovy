@@ -1,18 +1,20 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
-def config = rootProject.ext
+
 android {
-    compileSdk config.androidVersion.compileSdk
+    compileSdk deps.androidID.compileSdk
     defaultConfig {
-        minSdk config.androidVersion.minSdk
-        targetSdk config.androidVersion.targetSdk
-        versionCode config.androidVersion.versionCode
-        versionName config.androidVersion.versionName
+        minSdk deps.androidID.minSdk
+        targetSdk deps.androidID.targetSdk
+        versionCode deps.androidID.versionCode
+        versionName deps.androidID.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
     }
 
     buildTypes {
@@ -30,6 +32,16 @@ android {
     }
 }
 
+
+kapt {
+    arguments { arg("AROUTER_MODULE_NAME", project.getName()) }
+}
+
 dependencies {
+
+    testImplementation "junit:junit:$deps.versions.junit"
+    androidTestImplementation "androidx.test.ext:junit:$deps.versions.junittest"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$deps.versions.core"
+    kapt "com.alibaba:arouter-compiler:$deps.versions.arouter_compiler"
     implementation project(':comment')
 }

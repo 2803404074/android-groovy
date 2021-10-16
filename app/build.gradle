@@ -1,22 +1,21 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
-
-def config = rootProject.ext
 android {
-    compileSdk config.androidVersion.compileSdk
-
+    compileSdk deps.androidID.compileSdk
     defaultConfig {
-        applicationId config.androidVersion.applicationId
-        minSdk config.androidVersion.minSdk
-        targetSdk config.androidVersion.targetSdk
-        versionCode config.androidVersion.versionCode
-        versionName config.androidVersion.versionName
+        applicationId "com.example.uk"
+        minSdk deps.androidID.minSdk
+        targetSdk deps.androidID.targetSdk
+        versionCode deps.androidID.versionCode
+        versionName deps.androidID.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField 'boolean','isRelease',String.valueOf(config.isRelease)
+        buildConfigField 'boolean','isRelease',String.valueOf(deps.isRelease)
+
 
 
     }
@@ -24,15 +23,14 @@ android {
     buildTypes {
 
         debug {
-            if(!config.isRelease){
-                buildConfigField 'String','serverUrl',"\"${config.url.debug}\""
+            if(!deps.isRelease){
+                buildConfigField 'String','serverUrl',"\"${deps.serverUrl.debug}\""
             }else{
-                buildConfigField 'String','serverUrl',"\"${config.url.release}\""
+                buildConfigField 'String','serverUrl',"\"${deps.serverUrl.release}\""
             }
-
         }
         release {
-            buildConfigField 'String','release',"\"${config.url.release}\""
+            buildConfigField 'String','release',"\"${deps.serverUrl.release}\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -46,10 +44,20 @@ android {
     }
 }
 
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
+
 dependencies {
+    testImplementation "junit:junit:$deps.versions.junit"
+    androidTestImplementation "androidx.test.ext:junit:$deps.versions.junittest"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$deps.versions.core"
+    kapt "com.alibaba:arouter-compiler:$deps.versions.arouter_compiler"
     implementation project(':comment')
-    if(config.isRelease){
-        implementation project(':login')
-        implementation project(':main')
+    if(deps.isRelease){
+        implementation project(':Businesss:login')
+        implementation project(':Businesss:main')
     }
 }
