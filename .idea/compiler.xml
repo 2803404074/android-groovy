@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="11" />
+    <bytecodeTargetLevel target="1.7">
+      <module name="My_Application.app" target="11" />
+      <module name="My_Application.business" target="11" />
+      <module name="My_Application.business.login" target="11" />
+      <module name="My_Application.business.main" target="11" />
+      <module name="My_Application.Businesss.login" target="11" />
+      <module name="My_Application.Businesss.main" target="11" />
+      <module name="My_Application.comment" target="11" />
+      <module name="My_Application.net" target="11" />
+      <module name="My_Application.network" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>

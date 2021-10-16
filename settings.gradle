@@ -3,8 +3,13 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        jcenter() // Warning: this repository is going to shut down soon
+         // Warning: this repository is going to shut down soon
     }
 }
 rootProject.name = "My Application"
 include ':app'
+include ':comment'
+include ':Businesss'
+include ':Businesss:main'
+include ':Businesss:login'
+include ':network'

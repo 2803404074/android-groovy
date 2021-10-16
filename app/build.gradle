@@ -4,16 +4,15 @@ plugins {
 }
 
 def config = rootProject.ext
-def androidID = config.androidID
 android {
-    compileSdk config.compileSdk
+    compileSdk config.androidVersion.compileSdk
 
     defaultConfig {
-        applicationId androidID.applicationId
-        minSdk androidID.minSdk
-        targetSdk androidID.targetSdk
-        versionCode androidID.versionCode
-        versionName androidID.versionName
+        applicationId config.androidVersion.applicationId
+        minSdk config.androidVersion.minSdk
+        targetSdk config.androidVersion.targetSdk
+        versionCode config.androidVersion.versionCode
+        versionName config.androidVersion.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -48,11 +47,9 @@ android {
 }
 
 dependencies {
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-
-    config.dependencies.each{k,v->
-        implementation v
+    implementation project(':comment')
+    if(config.isRelease){
+        implementation project(':login')
+        implementation project(':main')
     }
 }
