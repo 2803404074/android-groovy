@@ -1,0 +1,58 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+}
+
+def config = rootProject.ext
+def androidID = config.androidID
+android {
+    compileSdk config.compileSdk
+
+    defaultConfig {
+        applicationId androidID.applicationId
+        minSdk androidID.minSdk
+        targetSdk androidID.targetSdk
+        versionCode androidID.versionCode
+        versionName androidID.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField 'boolean','isRelease',String.valueOf(config.isRelease)
+
+
+    }
+
+    buildTypes {
+
+        debug {
+            if(!config.isRelease){
+                buildConfigField 'String','serverUrl',"\"${config.url.debug}\""
+            }else{
+                buildConfigField 'String','serverUrl',"\"${config.url.release}\""
+            }
+
+        }
+        release {
+            buildConfigField 'String','release',"\"${config.url.release}\""
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    config.dependencies.each{k,v->
+        implementation v
+    }
+}
